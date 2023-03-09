@@ -32,7 +32,8 @@ function createWindow() {
   const settingWindow: MyBrowserWindow = new BrowserWindow({
     width: 720,
     height: 240,
-    resizable: false, // 👈 我们设置该窗口不可拉伸宽高
+    show: false,
+    resizable: false,
     webPreferences: {
       devTools: true,
       nodeIntegration: true,
@@ -41,7 +42,6 @@ function createWindow() {
   });
 
   settingWindow.uid = 'settingWindow';
-
   if (isDev()) {
     // 👇 看到了吗，在开发环境下，我们加载的是运行在 7001 端口的 React
     mainWindow.loadURL(`http://127.0.0.1:7001`);
@@ -51,6 +51,12 @@ function createWindow() {
     settingWindow.loadURL(`file://${path.join(__dirname, '../dist/setting.html')}`);
   }
 
+  // 自定义settingWindow的关闭事件
+  settingWindow.on('close', async (e) => {
+    settingWindow.hide();
+    e.preventDefault();
+    e.returnValue = false;
+  });
   ipcMain.on('Electron:SettingWindow-hide-event', () => {
     if (settingWindow.isVisible()) {
       settingWindow.hide();
