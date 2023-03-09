@@ -2,10 +2,9 @@
   "name": "resume",
   "version": "1.0.0",
   "description": "简历制作平台",
-  "main": "./app/main/electron.js",
+  "main": "./dist/electron.js",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "electron": "^19.1.9",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
@@ -37,6 +36,7 @@
     "classnames": "^2.3.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
+    "electron": "^19.1.9",
     "electron-builder": "^23.6.0",
     "eslint": "^8.35.0",
     "eslint-config-alloy": "^4.9.0",
@@ -65,7 +65,22 @@
     "start:render": "webpack-dev-server --config ./webpack/webpack.render.dev.js",
     "build:main": "webpack --config ./webpack/webpack.main.prod.js",
     "build:render": "webpack --config ./webpack/webpack.render.prod.js",
-    "install:electron": "ELECTRON_MIRROR=https://cdn.npm.taobao.org/dist/electron/ npm install electron"
+    "install:electron": "ELECTRON_MIRROR=https://cdn.npm.taobao.org/dist/electron/ npm install electron",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "ResumeMake.ElectronReact",
+    "productName": "ResumeMake",
+    "copyright": "Copyright © 2023 ${author}",
+    "files": [
+      "dist/**/*",
+      "package.json",
+      "node_modules/"
+    ],
+    "directories": {
+      "output": "package"
+    }
   },
   "author": "梁栗"
 }
